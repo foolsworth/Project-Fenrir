@@ -9,6 +9,8 @@ public class Movement : MonoBehaviour {
     public GameObject world;
     public GameObject cam;
 
+    public GameObject Gate;
+
     Animator fenrirAnimator;
    
     
@@ -126,54 +128,66 @@ public class Movement : MonoBehaviour {
         // moving texture offest and panning camera to give illusion of movement
 
         if (movingUp)
-            worldTextureOffsetX -= moveSpeed * 0.001f;
+        {
+            worldTextureOffsetX += -transform.right.x* moveSpeed * Time.deltaTime;
+            worldTextureOffsetY += -transform.right.z *moveSpeed* Time.deltaTime;
 
-        if (movingDown)
-            worldTextureOffsetX += moveSpeed * 0.001f;
+            Gate.transform.position += new Vector3(-transform.right.x * moveSpeed*6 * Time.deltaTime, 0, -transform.right.z * moveSpeed * 6 * Time.deltaTime);
+
+            //worldTextureOffsetX -= moveSpeed * 0.001f;
+        }
+
+        //if (movingDown)
+        //{
+        //    worldTextureOffsetX += moveSpeed * 0.001f;
+        //}
+
 
         if (movingLeft)
         {
-            worldTextureOffsetY -= moveSpeed * 0.001f;
-            fenrirAnimator.SetBool("movingLeft", true);
+            //worldTextureOffsetY -= moveSpeed * 0.001f;
+            //fenrirAnimator.SetBool("movingLeft", true);
             // only rotate camera if limit is not reached
-            if (anglePlayerToCam >= cameraRotationMin)
-            {
+            //if (anglePlayerToCam >= cameraRotationMin)
+            //{
                 cam.transform.RotateAround(transform.position, transform.up, -cameraRotationSpeed);
                 transform.Rotate(transform.up, -cameraRotationSpeed);
-            }
-
             
+            //}
+
+
         }
 
         if (movingRight)
         {
-            worldTextureOffsetY += moveSpeed * 0.001f;
+        //    worldTextureOffsetY += moveSpeed * 0.001f;
 
-            // only rotate camera if limit is not reached
-            if (anglePlayerToCam <= cameraRotationMax)
-            {
-                cam.transform.RotateAround(transform.position, transform.up, +cameraRotationSpeed);
-                transform.Rotate(transform.up, +cameraRotationSpeed);
-            }
+        //    // only rotate camera if limit is not reached
+        //    //if (anglePlayerToCam <= cameraRotationMax)
+        //    //{
+           cam.transform.RotateAround(transform.position, transform.up, +cameraRotationSpeed);
+           transform.Rotate(transform.up, +cameraRotationSpeed);
+           
+            //    //}
         }
 
-        if (!movingLeft && !movingRight)
-        {
-            if (anglePlayerToCam <= cameraRotationMax + 10 && anglePlayerToCam > initialAnglePlayerToCam)
-            {
-                cam.transform.RotateAround(transform.position, transform.up, -cameraRotationSpeed);
-                transform.Rotate(transform.up, -cameraRotationSpeed);
-            }
+        //if (!movingLeft && !movingRight)
+        //{
+        //    if (anglePlayerToCam <= cameraRotationMax + 10 && anglePlayerToCam > initialAnglePlayerToCam)
+        //    {
+        //        cam.transform.RotateAround(transform.position, transform.up, -cameraRotationSpeed);
+        //        transform.Rotate(transform.up, -cameraRotationSpeed);
+        //    }
 
-            if (anglePlayerToCam >= cameraRotationMin - 10 && anglePlayerToCam < initialAnglePlayerToCam)
-            {
-                cam.transform.RotateAround(transform.position, transform.up, +cameraRotationSpeed);
-                transform.Rotate(transform.up, +cameraRotationSpeed);
-            }
-            
-        }
+        //    if (anglePlayerToCam >= cameraRotationMin - 10 && anglePlayerToCam < initialAnglePlayerToCam)
+        //    {
+        //        cam.transform.RotateAround(transform.position, transform.up, +cameraRotationSpeed);
+        //        transform.Rotate(transform.up, +cameraRotationSpeed);
+        //    }
 
-        if (!movingUp && !movingDown && !movingLeft && !movingRight && anglePlayerToCam == initialAnglePlayerToCam)
+        //}
+
+        if (!movingUp && !movingDown && !movingLeft && !movingRight)
         {
             fenrirAnimator.speed = 0;
         }
