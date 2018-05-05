@@ -50,9 +50,13 @@ public class Movement : MonoBehaviour {
 
         //cam = Camera.main.gameObject;
 
-        camOrigin = cam.transform.up;
+        if (cam != null)
+        {
+            camOrigin = cam.transform.up;
+            initialAnglePlayerToCam = Vector3.SignedAngle(camOrigin, cam.transform.up, transform.up);
+        }
 
-        initialAnglePlayerToCam = Vector3.SignedAngle(camOrigin, cam.transform.up, transform.up);
+
 
         fenrirAnimator = GetComponent<Animator>();
         
@@ -125,7 +129,7 @@ public class Movement : MonoBehaviour {
         anglePlayerToCam = Vector3.SignedAngle(camOrigin, cam.transform.up, transform.up);
 
 
-        // moving texture offest and panning camera to give illusion of movement
+        // moving texture offest and the gate to give illusion of movement 
 
         if (movingUp)
         {
@@ -137,27 +141,18 @@ public class Movement : MonoBehaviour {
             //worldTextureOffsetX -= moveSpeed * 0.001f;
         }
 
-        //if (movingDown)
-        //{
-        //    worldTextureOffsetX += moveSpeed * 0.001f;
-        //}
 
-
+        // rotate player and camera
         if (movingLeft)
         {
             //worldTextureOffsetY -= moveSpeed * 0.001f;
             //fenrirAnimator.SetBool("movingLeft", true);
-            // only rotate camera if limit is not reached
-            //if (anglePlayerToCam >= cameraRotationMin)
-            //{
-                cam.transform.RotateAround(transform.position, transform.up, -cameraRotationSpeed);
-                transform.Rotate(transform.up, -cameraRotationSpeed);
-            
-            //}
 
-
+            cam.transform.RotateAround(transform.position, transform.up, -cameraRotationSpeed);
+            transform.Rotate(transform.up, -cameraRotationSpeed);
         }
 
+        // rotate player and camera
         if (movingRight)
         {
         //    worldTextureOffsetY += moveSpeed * 0.001f;
@@ -165,8 +160,8 @@ public class Movement : MonoBehaviour {
         //    // only rotate camera if limit is not reached
         //    //if (anglePlayerToCam <= cameraRotationMax)
         //    //{
-           cam.transform.RotateAround(transform.position, transform.up, +cameraRotationSpeed);
-           transform.Rotate(transform.up, +cameraRotationSpeed);
+         cam.transform.RotateAround(transform.position, transform.up, +cameraRotationSpeed);
+         transform.Rotate(transform.up, +cameraRotationSpeed);
            
             //    //}
         }
@@ -187,17 +182,21 @@ public class Movement : MonoBehaviour {
 
         //}
 
+
+        // stop walk animation if not moving
         if (!movingUp && !movingDown && !movingLeft && !movingRight)
         {
             fenrirAnimator.speed = 0;
         }
 
+        // resume walk animation if animation paused and  you started moving
         else
         {
             fenrirAnimator.speed = 1;
         }
 
 
+        
         worldRend.material.SetTextureOffset("_MainTex", new Vector2(worldTextureOffsetX, worldTextureOffsetY));
         
 

@@ -1,15 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MoveGate : MonoBehaviour {
 
-    public GameObject fenrir;
+
+   // player
+   public GameObject fenrir;
    public bool Activatefog = false;
+
+    Fading fader;
 
     // Use this for initialization
     void Start () {
         fenrir.GetComponent<Movement>().Gate = gameObject;
+        fader = GetComponent<Fading>();
 	}
 
     private void OnTriggerExit(Collider other)
@@ -28,6 +34,11 @@ public class MoveGate : MonoBehaviour {
         {
             Activatefog = true;
         }
+
+        if (other.gameObject.name == "GateActivate")
+        {
+            fader.LoadSceneAsync("FirstTrial", 1.5f);
+        }
     }
     // Update is called once per frame
     void Update () {
@@ -37,3 +48,4 @@ public class MoveGate : MonoBehaviour {
         }
 	}
 }
+
