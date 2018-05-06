@@ -18,13 +18,14 @@ public class Eat : MonoBehaviour {
 		
 	}
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.transform.name == "fenrir")
+        if (other.gameObject.transform.name == "fenrir")
         {
             fenrirMoveScript.moveSpeed += 0.5f;
+            Destroy(gameObject);
         }
 
-        Destroy(gameObject);
+        
     }
 }

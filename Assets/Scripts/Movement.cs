@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour {
     public GameObject world;
     public GameObject cam;
 
-    public static List<GameObject> EverythingMoving;
+    public static List<GameObject> EverythingMoving= new List<GameObject>();
 
     Animator fenrirAnimator;
    
@@ -36,17 +36,41 @@ public class Movement : MonoBehaviour {
     bool movingDown;
     bool movingLeft;
     bool movingRight;
+    public bool inwall;
 
     public float cameraRotationSpeed;
 
     // how far to rotate
     public float cameraRotationMin;
     public float cameraRotationMax;
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "wall")
+        {
+            inwall = true;
+            movingUp=false;
+            movingDown= true;
+            movingLeft = false;
+            movingRight = false;
+
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "wall")
+        {
+            inwall = false;
+            movingUp = false;
+            movingDown = false;
+
+            movingLeft = false;
+            movingRight = false;
+        }
+    }
 
     // Use this for initialization
     void Start () {
-
         if (world != null)
             worldRend = world.gameObject.GetComponent<Renderer>();
 
@@ -81,22 +105,22 @@ public class Movement : MonoBehaviour {
 
 
         // Go Up
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) && !inwall)
         {
-            //Debug.Log("moving up");
+            //Debug.Log("moving up");&& !inwall
             movingUp = true;
         }
 
         // Go Down
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            //Debug.Log("moving down");
-            movingDown = true;
-        }
+        //if (Input.GetKeyDown(KeyCode.S) && !inwall)
+        //{
+        //    //Debug.Log("moving down");
+        //    movingDown = true;
+        //}
 
 
         //Go Left
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(KeyCode.A) && !inwall)
         {
             //Debug.Log("moving left");
             movingLeft = true;
@@ -104,29 +128,29 @@ public class Movement : MonoBehaviour {
 
 
         // Go Right
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.D) && !inwall)
         {
             //Debug.Log("moving right");
             movingRight = true;
         }
 
         // Stop going Up
-        if (Input.GetKeyUp(KeyCode.W))
+        if (Input.GetKeyUp(KeyCode.W) && !inwall)
         {
             //Debug.Log("stopped moving up");
             movingUp = false;
         }
 
-        // Stop going down
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            //Debug.Log("stopped moving down");
-            movingDown = false;
-        }
+        //// Stop going down
+        //if (Input.GetKeyUp(KeyCode.S) && !inwall)
+        //{
+        //    //Debug.Log("stopped moving down");
+        //    movingDown = false;
+        //}
 
 
         // Stop going Left
-        if (Input.GetKeyUp(KeyCode.A))
+        if (Input.GetKeyUp(KeyCode.A) && !inwall)
         {
             //Debug.Log("stopped moving left");
             movingLeft = false;
@@ -134,7 +158,7 @@ public class Movement : MonoBehaviour {
 
 
         // Stop going Right
-        if (Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.D) && !inwall)
         {
             //Debug.Log("stopped moving right");
             movingRight = false;
@@ -151,8 +175,23 @@ public class Movement : MonoBehaviour {
             worldTextureOffsetX += -transform.right.x* moveSpeed * Time.deltaTime;
             worldTextureOffsetY += -transform.right.z *moveSpeed* Time.deltaTime;
 
-            foreach (GameObject thing in EverythingMoving) { 
+            foreach (GameObject thing in EverythingMoving) {
+
                 thing.transform.position += new Vector3(-transform.right.x * moveSpeed * 6 * Time.deltaTime, 0, -transform.right.z * moveSpeed * 6 * Time.deltaTime);
+            }
+
+            //worldTextureOffsetX -= moveSpeed * 0.001f;
+        }
+
+        if (inwall)
+        {
+            worldTextureOffsetX -= -transform.right.x * moveSpeed * Time.deltaTime;
+            worldTextureOffsetY -= -transform.right.z * moveSpeed * Time.deltaTime;
+
+            foreach (GameObject thing in EverythingMoving)
+            {
+
+                thing.transform.position -= new Vector3(-transform.right.x * moveSpeed * 6 * Time.deltaTime, 0, -transform.right.z * moveSpeed * 6 * Time.deltaTime);
             }
 
             //worldTextureOffsetX -= moveSpeed * 0.001f;
@@ -222,7 +261,7 @@ public class Movement : MonoBehaviour {
     IEnumerator Restart()
     {
         yield return new WaitForSeconds(4.0f);
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        EverythingMoving.Clear();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
     }
 }

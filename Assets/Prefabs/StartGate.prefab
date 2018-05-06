@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 54188285629770150}
   - component: {fileID: 65190165865223882}
   - component: {fileID: 114210835739795020}
+  - component: {fileID: 114584436479073308}
   m_Layer: 0
   m_Name: StartGate
   m_TagString: Untagged
@@ -101,7 +102,7 @@ Transform:
   m_GameObject: {fileID: 1739699377208304}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 30.2, z: 0}
-  m_LocalScale: {x: 6.57956, y: 6.5795565, z: 6.5795565}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4529898999768950}
   m_RootOrder: 2
@@ -113,7 +114,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1043451606524268}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.943628, y: 148.93373, z: -2.2338943}
+  m_LocalPosition: {x: 25.7, y: 148.93373, z: -1.2}
   m_LocalScale: {x: 0.048815437, y: 0.04881542, z: 0.04881542}
   m_Children:
   - {fileID: 4130698080271608}
@@ -309,3 +310,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fenrir: {fileID: 0}
   Activatefog: 0
+--- !u!114 &114584436479073308
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1043451606524268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3171bc50b00ce804bb9189730c107c92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeTexture: {fileID: 2800000, guid: 1b09b4fc50237ac41b4f5b0252191d4f, type: 3}
+  fadeSpeed: 0.3

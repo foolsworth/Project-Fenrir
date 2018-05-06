@@ -9,8 +9,9 @@ public class MoveGate : MonoBehaviour {
    // player
    public GameObject fenrir;
    public bool Activatefog = false;
-
     Fading fader;
+    public GameObject mazeManager;
+    bool wentThrough = false;
 
     // Use this for initialization
     void Start () {
@@ -20,11 +21,18 @@ public class MoveGate : MonoBehaviour {
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.name == "fenrir")
+        if (other.gameObject.name == "fenrir" )
         {
-            Activatefog = false;
-            gameObject.transform.Find("Plane").transform.localScale = new Vector3(0, 0, 0);
-            gameObject.transform.position = fenrir.transform.position+(fenrir.transform.right.normalized *20);
+            if (!wentThrough)
+            {
+                Activatefog = false;
+                gameObject.transform.Find("Plane").transform.localScale = new Vector3(0, 0, 0);
+                gameObject.transform.position = fenrir.transform.position + (fenrir.transform.right.normalized * 20);
+            }
+            else
+            {
+                gameObject.tag = "wall";
+            }
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -37,7 +45,10 @@ public class MoveGate : MonoBehaviour {
 
         if (other.gameObject.name == "GateActivate")
         {
-            fader.LoadSceneAsync("FirstTrial", 1.5f);
+            wentThrough = true;
+            mazeManager.GetComponent<MazeManager>().startGame();
+            fenrir.GetComponent<SphereCollider>().enabled = false;
+            fenrir.GetComponent<CapsuleCollider>().enabled = true;
         }
     }
     // Update is called once per frame

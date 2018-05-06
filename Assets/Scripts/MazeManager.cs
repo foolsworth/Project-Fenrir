@@ -9,8 +9,8 @@ public class MazeManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        startGame();
-	}
+        Movement.EverythingMoving.Add(gameObject);
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -18,15 +18,24 @@ public class MazeManager : MonoBehaviour {
 	}
 
 
-    void startGame()
+    public  void startGame()
     {
-        transform.position = Gate.transform.position; 
+        //transform.position = Gate.transform.position;
+        Debug.Log("start game");
+
+        StartCoroutine(CallChildren());
+
     }
 
-    IEnumerator CallChildren(GameObject child)
+    IEnumerator CallChildren()
     {
-        child.GetComponent<Wall>().startGame();
+        foreach (Transform child in gameObject.transform)
+        {
+            child.GetComponent<Wall>().startGame();
+            yield return new WaitForSeconds(0.02f);
+        }
+        
 
-        yield return new WaitForSeconds(1.0f);
+        
     }
 }
