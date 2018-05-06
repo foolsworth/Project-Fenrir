@@ -59,10 +59,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\EndGate.cs" />
     <Compile Include="Assets\Scripts\Fading.cs" />
     <Compile Include="Assets\Scripts\FenrirController.cs" />
-    <Compile Include="Assets\Scripts\MoveGate.cs" />
     <Compile Include="Assets\Scripts\Movement.cs" />
+    <Compile Include="Assets\Scripts\StartGate.cs" />
     <None Include="Assets\Shaders\CelShader.shader" />
     <None Include="Assets\Shaders\FogShader.shader" />
     <Reference Include="UnityEditor.StandardEvents">
