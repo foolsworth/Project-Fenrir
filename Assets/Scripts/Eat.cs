@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Eat : MonoBehaviour {
 
-    public GameObject player;
+    GameObject player;
     Movement fenrirMoveScript;
 
 
 	// Use this for initialization
 	void Start () {
+
+        player = GameObject.Find("fenrir");
         fenrirMoveScript = player.GetComponent<Movement>();
 	}
 	

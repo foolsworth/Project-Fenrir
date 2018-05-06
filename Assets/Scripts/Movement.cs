@@ -9,8 +9,10 @@ public class Movement : MonoBehaviour {
     
     public GameObject world;
     public GameObject cam;
+    public GameObject mazeManager;
 
     public static List<GameObject> EverythingMoving= new List<GameObject>();
+    public static List<Vector3> ConsumablePositions = new List<Vector3>();
 
     Animator fenrirAnimator;
    
@@ -261,6 +263,11 @@ public class Movement : MonoBehaviour {
     IEnumerator Restart()
     {
         yield return new WaitForSeconds(4.0f);
+
+        transform.parent = mazeManager.transform;
+        Vector3 temp = transform.localPosition;
+        ConsumablePositions.Add(temp);
+
         EverythingMoving.Clear();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
     }

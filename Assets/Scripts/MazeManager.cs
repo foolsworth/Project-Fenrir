@@ -6,9 +6,20 @@ public class MazeManager : MonoBehaviour {
 
 
     public GameObject Gate;
+    public GameObject Consumable;
+    GameObject ourConsumable;
 
 	// Use this for initialization
 	void Start () {
+
+        foreach (Vector3 vec in Movement.ConsumablePositions)
+        {
+            ourConsumable = Instantiate(Consumable, gameObject.transform) as GameObject;
+            ourConsumable.transform.localPosition = vec;
+
+
+        }
+
         Movement.EverythingMoving.Add(gameObject);
     }
 	

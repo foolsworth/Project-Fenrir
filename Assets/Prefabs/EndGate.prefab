@@ -55,6 +55,7 @@ GameObject:
   - component: {fileID: 54035600635812678}
   - component: {fileID: 65842368866226360}
   - component: {fileID: 114129737242923066}
+  - component: {fileID: 114636203286815006}
   m_Layer: 0
   m_Name: EndGate
   m_TagString: Untagged
@@ -309,3 +310,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fadeTexture: {fileID: 2800000, guid: 1b09b4fc50237ac41b4f5b0252191d4f, type: 3}
   fadeSpeed: 0.3
+--- !u!114 &114636203286815006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1960297600994496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cfa82e3814bb9346bfc2317bc46c22d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
