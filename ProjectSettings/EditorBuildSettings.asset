@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Desert.unity
     guid: 6e9232a428ed50845858ccafba5457f7
   - enabled: 1
-    path: Assets/Scenes/FirstTrial.unity
-    guid: 53387cccda6cee6449afff3348fd10ff
+    path: Assets/Scenes/Maze2.unity
+    guid: f0b9a31877e3d9448bef50b54c6a84ac
   m_configObjects: {}
