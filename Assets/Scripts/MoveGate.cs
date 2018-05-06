@@ -14,7 +14,7 @@ public class MoveGate : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        fenrir.GetComponent<Movement>().Gate = gameObject;
+        Movement.EverythingMoving.Add(gameObject);
         fader = GetComponent<Fading>();
 	}
 

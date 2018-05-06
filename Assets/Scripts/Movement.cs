@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class Movement : MonoBehaviour {
@@ -9,7 +10,7 @@ public class Movement : MonoBehaviour {
     public GameObject world;
     public GameObject cam;
 
-    public GameObject Gate;
+    public static List<GameObject> EverythingMoving;
 
     Animator fenrirAnimator;
    
@@ -24,6 +25,7 @@ public class Movement : MonoBehaviour {
     float initialAnglePlayerToCam;
 
     public float moveSpeed;
+    public float slowingRate;
     
 
     float worldTextureOffsetX;
@@ -59,11 +61,24 @@ public class Movement : MonoBehaviour {
 
 
         fenrirAnimator = GetComponent<Animator>();
+
+        slowingRate = 0.0005f;
         
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (moveSpeed <= 0.0f)
+        {
+            StartCoroutine(Restart());
+        }
+
+        if (moveSpeed > 0.0f)
+        {
+            moveSpeed -= slowingRate;
+        }
+
 
         // Go Up
         if (Input.GetKeyDown(KeyCode.W))
@@ -136,7 +151,9 @@ public class Movement : MonoBehaviour {
             worldTextureOffsetX += -transform.right.x* moveSpeed * Time.deltaTime;
             worldTextureOffsetY += -transform.right.z *moveSpeed* Time.deltaTime;
 
-            Gate.transform.position += new Vector3(-transform.right.x * moveSpeed*6 * Time.deltaTime, 0, -transform.right.z * moveSpeed * 6 * Time.deltaTime);
+            foreach (GameObject thing in EverythingMoving) { 
+                thing.transform.position += new Vector3(-transform.right.x * moveSpeed * 6 * Time.deltaTime, 0, -transform.right.z * moveSpeed * 6 * Time.deltaTime);
+            }
 
             //worldTextureOffsetX -= moveSpeed * 0.001f;
         }
@@ -184,7 +201,7 @@ public class Movement : MonoBehaviour {
 
 
         // stop walk animation if not moving
-        if (!movingUp && !movingDown && !movingLeft && !movingRight)
+        if ((!movingUp && !movingDown && !movingLeft && !movingRight) || moveSpeed <= 0.0f)
         {
             fenrirAnimator.speed = 0;
         }
@@ -200,5 +217,12 @@ public class Movement : MonoBehaviour {
         worldRend.material.SetTextureOffset("_MainTex", new Vector2(worldTextureOffsetX, worldTextureOffsetY));
         
 
+    }
+
+    IEnumerator Restart()
+    {
+        yield return new WaitForSeconds(4.0f);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
