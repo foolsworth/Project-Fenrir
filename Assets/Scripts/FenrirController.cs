@@ -11,7 +11,7 @@ public class FenrirController : MonoBehaviour
     public float fenrirJump;
 
     public GameObject cam;
-
+    public Transform cameratransform;
     public float cameraRotationSpeed;
 
     // how far to rotate
@@ -29,7 +29,7 @@ public class FenrirController : MonoBehaviour
     {
         fenrirRB = GetComponent<Rigidbody>();
         fenrirAnim = GetComponent<Animator>();
-
+        cameratransform = cam.transform;
     }
 
     void Update()
@@ -57,10 +57,10 @@ public class FenrirController : MonoBehaviour
         //}
       
 
-        Pitch -= Input.GetAxis("Mouse Y") * cameraRotationSpeed;
-        Pitch = Mathf.Clamp(Pitch, cameraRotationMin, cameraRotationMax);
-        Vector3 ObjectRotation = new Vector3(Pitch, cam.transform.eulerAngles.y, cam.transform.eulerAngles.z);
-        cam.transform.eulerAngles = ObjectRotation;
+        //Pitch -= Input.GetAxis("Mouse Y") * cameraRotationSpeed;
+        //Pitch = Mathf.Clamp(Pitch, cameraRotationMin, cameraRotationMax);
+        //Vector3 ObjectRotation = new Vector3(Pitch, cam.transform.eulerAngles.y, cam.transform.eulerAngles.z);
+        //cam.transform.eulerAngles = ObjectRotation;
         //cam.transform.localEulerAngles = new Vector3(Mathf.Clamp(cam.transform.localEulerAngles.x, cameraRotationMin, cameraRotationMax), 
         //   cam.transform.localEulerAngles.y, cam.transform.localEulerAngles.z);
 
@@ -89,7 +89,18 @@ public class FenrirController : MonoBehaviour
 
 
 
-        //fenrirRB.velocity = Vector3.ClampMagnitude(fenrirRB.velocity, maxFenrirSpeed * 2.0f);
+        fenrirRB.velocity = Vector3.ClampMagnitude(fenrirRB.velocity, maxFenrirSpeed * 2.0f);
+
+        //RaycastHit raycast;
+        //if (Physics.Raycast(transform.position, Vector3.Normalize(transform.position- cam.transform.position), out raycast, Vector3.Magnitude( transform.position- cameratransform.position)))
+        //{
+        //    if (raycast.collider.tag != "MainCamera")
+        //    {
+        //        Vector3.Lerp(cam.transform.position, raycast.point, Time.deltaTime*20);
+        //    }
+        //}
+
+
     }
 
     private void OnCollisionEnter(Collision collision)
